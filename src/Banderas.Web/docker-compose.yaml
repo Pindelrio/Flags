@@ -1,0 +1,9 @@
+﻿services:
+ mysql-banderas:
+  container_name: mysql-banderas
+  image: mysql:5.6
+  ports:
+  - 4306:3306
+  environment:
+  - MYSQL_DATABASE=banderasbd
+  - MYSQL_ROOT_PASSWORD=pass
