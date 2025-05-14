@@ -11,17 +11,19 @@ namespace Banderas.Web.Controllers
     [Route("Flags")]
     public class FlagsController(
         AddFlagUseCase addFlagUseCase,
-        GetFlagsUseCase getFlagsUseCase,
+        GetPaginatedFlagsUseCase getFlagsUseCase,
         GetSingleFlagUseCase getSingleFlagUseCase,
         UpdateFlagUseCase updateFlagUseCase,
         DeleteFlagUseCase deleteFlagUseCase
         ) : Controller
     {
-        [HttpGet("index")]
-        public async Task<IActionResult> Index()
+        //[HttpGet("index")]
+        [HttpGet("")]
+        [HttpGet("{page:int}")]
+        public async Task<IActionResult> Index(string? search, int page=1, int size=5)
         {
-            var listFlags = await getFlagsUseCase.Execute();
-            return View(new FlagIndexViewModel() { Flags = listFlags });
+            var listFlags = await getFlagsUseCase.Execute(search, page, size);
+            return View(new FlagIndexViewModel() { Pagination = listFlags.Value });
         }
 
         [HttpGet("{flagName}")]

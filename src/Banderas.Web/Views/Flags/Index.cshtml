@@ -7,8 +7,30 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create" asp-controller="flags" class="btn btn-primary">Create Flag</a>
+    <a asp-action="Create" asp-controller="flags" method="get" class="btn btn-primary">Create Flag</a>
 </p>
+
+<div class="row">
+    <form asp-action="Index" asp-controller="flags" method="get" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <label class="visually-hidden" for="InlineFromSearch">Search</label>
+            <div class="input-group">
+                <div class="input-group-text">Search</div>
+                <input type="text" asp-for="Pagination.Search" name="search" class="form-control" id="InlineFromSearch" placeholder="Flag Name">
+            </div>
+        </div>
+        <div class="col-12">
+            <label class="visually-hidden" for="inlineFormSelect">Items per page</label>
+            <select asp-for="Pagination.PageSize" name="size" class="form-control" asp-items="@(new SelectList(@Model.SelectOptions))">
+               <option>Items Per Page</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </form>
+</div>
+
 <table class="table">
     <thead>
         ​<tr>
@@ -18,7 +40,7 @@
             ​</tr>
         ​</thead>
     ​<tbody>
-        ​@foreach (var flag in Model.Flags)
+        ​@foreach (var flag in Model.Pagination.Items)
         {
         <tr>
             <th scope="row">@flag.Name</th>
@@ -41,3 +63,54 @@
         }
 ​</tbody>
 </table>
+
+<nav aria-label="Page navigation example">
+	<ul class="pagination">
+		@if (Model.Pagination.CurrentPage > 1)
+		{
+			<li class="page-item">
+				<a class="page-link" aria-label="Previous" asp-action="index" asp-controller="flags"
+				   asp-route-search="@Model.Pagination.Search" asp-route-page="1"
+				   asp-route-size="@Model.Pagination.PageSize">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+
+			<li class="page-item">
+				<a href="/flags/@(Model.Pagination.CurrentPage-1)?search=@Model.Pagination.Search&size=@Model.Pagination.PageSize"
+				   class="page-link">@(Model.Pagination.CurrentPage - 1)</a>
+			</li>
+		}
+
+
+		<li class="page-item">
+			<a class="page-link" href="#">@Model.Pagination.CurrentPage</a>
+		</li>
+		@{
+			int totalPages = (int)Math.Ceiling(Model.Pagination.TotalItems / (double)Model.Pagination.PageSize);
+
+			if (Model.Pagination.CurrentPage < totalPages)
+			{
+				<li class="page-item">
+					<a href="@Url.Action("Index", "flags", new {
+					page = Model.Pagination.CurrentPage + 1,
+					size = Model.Pagination.PageSize,
+					search=Model.Pagination.Search
+					})" class="page-link">@(Model.Pagination.CurrentPage + 1)</a>
+				</li>
+			}
+
+			if (Model.Pagination.CurrentPage+1 < totalPages)
+			{
+				<li class="page-item">
+					<a href="/flags/@totalPages?search=@Model.Pagination.Search&size=@Model.Pagination.PageSize"
+					   class="page-link">
+					   <span aria-hidden="true">&raquo;</span>
+					   </a>
+				</li>
+			}
+
+		}
+
+	</ul>
+</nav>

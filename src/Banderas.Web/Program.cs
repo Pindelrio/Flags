@@ -19,7 +19,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IFlagUserDetails, FlagUserDetails>();
 builder.Services.AddScoped<AddFlagUseCase>();
-builder.Services.AddScoped<GetFlagsUseCase>();
+builder.Services.AddScoped<GetPaginatedFlagsUseCase>();
 builder.Services.AddScoped<GetSingleFlagUseCase>();
 builder.Services.AddScoped<UpdateFlagUseCase>();
 builder.Services.AddScoped<DeleteFlagUseCase>();
