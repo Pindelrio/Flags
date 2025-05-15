@@ -16,8 +16,7 @@ namespace Banderas.Web.Business.UseCases.Flags
         private async Task<Result<FlagDto>> VerifyIsTheOnlyOneWithThatName(FlagDto flagDto)
         {
             bool alreadyExist = await context.Flags
-                .Where(a => a.UserId == userDetails.UserId
-                    && a.Name.Equals(flagDto.Name, StringComparison.InvariantCultureIgnoreCase)
+                .Where(a => a.Name.Equals(flagDto.Name, StringComparison.InvariantCultureIgnoreCase)
                     && a.Id != flagDto.Id)
                 .AnyAsync();
             if ( alreadyExist)
@@ -28,7 +27,7 @@ namespace Banderas.Web.Business.UseCases.Flags
         
         private async Task<Result<FlagEntity>> GetFromDb(int id)
         => await context.Flags
-            .Where(a => a.UserId == userDetails.UserId && a.Id == id)
+            .Where(a => a.Id == id)
             //.AsNoTracking() aqui no fem tracking perque volem que es pugui modificar
             .SingleAsync(); 
 

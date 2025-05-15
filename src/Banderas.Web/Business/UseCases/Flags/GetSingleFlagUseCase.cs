@@ -14,8 +14,7 @@ namespace Banderas.Web.Business.UseCases.Flags
             => await GetFromDB(flagName).Map(x => x.ToDto());
         private async Task<Result<FlagEntity>> GetFromDB(string flagName)
             => await context.Flags
-                .Where(a => a.UserId == userDetails.UserId
-                    && a.Name.Equals(flagName, StringComparison.InvariantCultureIgnoreCase))
+                .Where(a => a.Name.Equals(flagName, StringComparison.InvariantCultureIgnoreCase))
                 .AsNoTracking()
                 .SingleAsync(); //si no existeix llança excepcio
 

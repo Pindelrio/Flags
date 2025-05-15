@@ -4,10 +4,8 @@ using Banderas.Web.Data;
 using Banderas.Web.Data.Entities;
 using Banderas.Web.Dtos;
 using Banderas.Web.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ROP;
-using System.Drawing;
 
 namespace Banderas.Web.Business.UseCases.Flags
 {
@@ -53,35 +51,17 @@ namespace Banderas.Web.Business.UseCases.Flags
 
         private async Task<Result<int>> TotalElements(string? search)
         {
-            var query = context.Flags
-            .Where(a => a.UserId == userDetails.UserId);
-
             if (!string.IsNullOrEmpty(search))
             {
-                query = query.Where(a => a.Name.Contains(search, StringComparison.InvariantCultureIgnoreCase));
+                return await context.Flags.Where(a => a.Name.Contains(search, StringComparison.InvariantCultureIgnoreCase)).CountAsync();
             }
 
-            return await query.CountAsync();
+            return await context.Flags.CountAsync();
         }
-
-        //{
-        //    string userId = userDetails.UserId;
-        //    var flags = await context.Flags
-        //        .Where(f => f.UserId == userId)
-        //        .Select(f => new FlagDto
-        //        {
-        //            Name = f.Name,
-        //            IsEnabled = f.Value
-        //        })
-        //        .AsNoTracking()
-        //        .ToListAsync();
-        //    return flags;
-        //}
 
         private async Task<Result<List<FlagEntity>>> GetFromDB(string? search, int page, int size)
         {
             var query = context.Flags
-                .Where(a => a.UserId == userDetails.UserId)
                 .Skip((page - 1) * size)
                 .Take(size);
 

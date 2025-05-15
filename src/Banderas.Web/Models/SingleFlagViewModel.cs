@@ -5,7 +5,7 @@ namespace Banderas.Web.Models
 {
     internal class SingleFlagViewModel
     {
-        public FlagDto Flag { get; set; }
+        public FlagDto? Flag { get; set; }
         public string? Message { get; set; }
     }
 }

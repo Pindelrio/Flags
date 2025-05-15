@@ -13,8 +13,7 @@ namespace Banderas.Web.Business.UseCases.Flags
         
         private async Task<Result<FlagEntity>> GetFromDB(string flagName)
             => await context.Flags
-                .Where(a => a.UserId == userDetails.UserId
-                    && a.Name.Equals(flagName, StringComparison.InvariantCultureIgnoreCase))
+                .Where(a => a.Name.Equals(flagName, StringComparison.InvariantCultureIgnoreCase))
                 .SingleAsync(); //si no existeix llança excepcio
         private async Task<Result<bool>> Delete(FlagEntity entity)
         {

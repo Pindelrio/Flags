@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banderas.Web", "src\Banderas.Web\Banderas.Web.csproj", "{F8A0CE2F-2DDC-497C-A98D-7C9FDDAA161B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banderas.UnitTests", "tests\Banderas.UnitTests\Banderas.UnitTests.csproj", "{435A1A93-B040-4906-8C6D-B97DDB2B63ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F8A0CE2F-2DDC-497C-A98D-7C9FDDAA161B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8A0CE2F-2DDC-497C-A98D-7C9FDDAA161B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8A0CE2F-2DDC-497C-A98D-7C9FDDAA161B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{435A1A93-B040-4906-8C6D-B97DDB2B63ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{435A1A93-B040-4906-8C6D-B97DDB2B63ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{435A1A93-B040-4906-8C6D-B97DDB2B63ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{435A1A93-B040-4906-8C6D-B97DDB2B63ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

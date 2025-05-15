@@ -14,8 +14,7 @@ namespace Banderas.Web.Business.UseCases.Flags
         private async Task<Result<string>> ValidateFlag(string flagName)
         {
             bool flagExist = await context.Flags
-                .Where(a => a.UserId == userDetails.UserId
-                            && a.Name.Equals(flagName, StringComparison.InvariantCultureIgnoreCase)).AnyAsync();
+                .Where(a => a.Name.Equals(flagName, StringComparison.InvariantCultureIgnoreCase)).AnyAsync();
             if (flagExist)
                 return Result.Failure<string>($"Flag {flagName} already exists");
 
