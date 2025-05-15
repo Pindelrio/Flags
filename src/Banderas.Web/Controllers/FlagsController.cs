@@ -10,11 +10,7 @@ namespace Banderas.Web.Controllers
     [Authorize] //Comprova que estigui loguejat
     [Route("Flags")]
     public class FlagsController(
-        AddFlagUseCase addFlagUseCase,
-        GetPaginatedFlagsUseCase getFlagsUseCase,
-        GetSingleFlagUseCase getSingleFlagUseCase,
-        UpdateFlagUseCase updateFlagUseCase,
-        DeleteFlagUseCase deleteFlagUseCase
+        FlagsUseCases flags
         ) : Controller
     {
         //[HttpGet("index")]
@@ -22,14 +18,14 @@ namespace Banderas.Web.Controllers
         [HttpGet("{page:int}")]
         public async Task<IActionResult> Index(string? search, int page=1, int size=5)
         {
-            var listFlags = await getFlagsUseCase.Execute(search, page, size);
+            var listFlags = await flags.GetPaginated.Execute(search, page, size);
             return View(new FlagIndexViewModel() { Pagination = listFlags.Value });
         }
 
         [HttpGet("{flagName}")]
         public IActionResult GetSingleFlag(string flagName, string message)
         {
-            var singleFlag = getSingleFlagUseCase.Execute(flagName);
+            var singleFlag = flags.Get.Execute(flagName);
             return View("Single", new SingleFlagViewModel() { Flag = singleFlag.Result.Value, Message = message });
         }
 
@@ -43,7 +39,7 @@ namespace Banderas.Web.Controllers
         public async Task<IActionResult> AddFlagToDatabase(FlagViewModel request)
         {
             
-            Result<bool> isCreated = await addFlagUseCase.Execute(request.Name, request.IsEnabled);
+            Result<bool> isCreated = await flags.Add.Execute(request.Name, request.IsEnabled);
             if(isCreated.Success)
                 return RedirectToAction("Index");
 
@@ -58,7 +54,7 @@ namespace Banderas.Web.Controllers
         [HttpPost("{flagName}")]
         public async Task<IActionResult> UpdateFlag(FlagDto flag)
         {
-            var singleFlag = await updateFlagUseCase.Execute(flag);
+            var singleFlag = await flags.Update.Execute(flag);
             return View("Single", new SingleFlagViewModel()
             {
                 Flag = singleFlag.Value,
@@ -69,7 +65,7 @@ namespace Banderas.Web.Controllers
         [HttpGet("delete/{flagName}")]
         public async Task<IActionResult> Delete(string flagName)
         {
-            Result<bool> isDeleted = await deleteFlagUseCase.Execute(flagName);
+            Result<bool> isDeleted = await flags.Delete.Execute(flagName);
             if (isDeleted.Success)
                 return RedirectToAction("Index");
             else

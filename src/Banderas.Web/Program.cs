@@ -1,4 +1,5 @@
 using Banderas.Web.Business.UseCases;
+using Banderas.Web.Business.UseCases.Flags;
 using Banderas.Web.Business.UserInfo;
 using Banderas.Web.Data;
 using Microsoft.AspNetCore.Identity;
@@ -18,11 +19,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IFlagUserDetails, FlagUserDetails>();
+builder.Services.AddScoped<FlagsUseCases>();
+
 builder.Services.AddScoped<AddFlagUseCase>();
 builder.Services.AddScoped<GetPaginatedFlagsUseCase>();
 builder.Services.AddScoped<GetSingleFlagUseCase>();
 builder.Services.AddScoped<UpdateFlagUseCase>();
 builder.Services.AddScoped<DeleteFlagUseCase>();
+
 
 var app = builder.Build();
 

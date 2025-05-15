@@ -4,7 +4,7 @@ using Banderas.Web.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using ROP;
 
-namespace Banderas.Web.Business.UseCases
+namespace Banderas.Web.Business.UseCases.Flags
 {
    public class AddFlagUseCase(ApplicationDbContext context, IFlagUserDetails userDetails)
     {

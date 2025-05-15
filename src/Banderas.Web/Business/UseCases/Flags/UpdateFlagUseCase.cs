@@ -6,7 +6,7 @@ using Banderas.Web.Dtos;
 using Microsoft.EntityFrameworkCore;
 using ROP;
 
-namespace Banderas.Web.Business.UseCases
+namespace Banderas.Web.Business.UseCases.Flags
 {
     public class UpdateFlagUseCase(ApplicationDbContext context, IFlagUserDetails userDetails)
     {
