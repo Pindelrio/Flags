@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="MySql.EntityFrameworkCore" Version="9.0.3" />
     <PackageReference Include="Netmentor.ROP" Version="1.8.0" />
+    <PackageReference Include="Netmentor.ROP.ApiExtensions" Version="1.8.0" />
   </ItemGroup>
 
   <ItemGroup>

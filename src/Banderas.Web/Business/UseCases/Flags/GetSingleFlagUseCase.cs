@@ -11,12 +11,14 @@ namespace Banderas.Web.Business.UseCases.Flags
     public class GetSingleFlagUseCase(ApplicationDbContext context, IFlagUserDetails userDetails)
     {
         public async Task<Result<FlagDto>> Execute(string flagName)
-            => await GetFromDB(flagName).Map(x => x.ToDto());
-        private async Task<Result<FlagEntity>> GetFromDB(string flagName)
+            => await GetFromDB(flagName)
+            .Bind(flag => flag?? Result.NotFound<FlagEntity>("Flag doesn't exist")).Map(x => x.ToDto());
+        private async Task<Result<FlagEntity?>> GetFromDB(string flagName)
             => await context.Flags
                 .Where(a => a.Name.Equals(flagName, StringComparison.InvariantCultureIgnoreCase))
                 .AsNoTracking()
-                .SingleAsync(); //si no existeix llança excepcio
+                .FirstOrDefaultAsync();
+                //.SingleAsync(); //si no existeix llança excepcio
 
     }
 }

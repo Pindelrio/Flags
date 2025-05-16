@@ -9,9 +9,7 @@ namespace Banderas.Web.Controllers
 {
     [Authorize] //Comprova que estigui loguejat
     [Route("Flags")]
-    public class FlagsController(
-        FlagsUseCases flags
-        ) : Controller
+    public class FlagsController(FlagsUseCases flags) : Controller
     {
         //[HttpGet("index")]
         [HttpGet("")]
