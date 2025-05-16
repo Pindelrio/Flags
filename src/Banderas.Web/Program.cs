@@ -4,6 +4,8 @@ using Banderas.Web.Business.UserInfo;
 using Banderas.Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,19 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+//SWAGGER
+builder.Services.AddSwaggerGen(options => options.AddSecurityDefinition("token", new OpenApiSecurityScheme
+{
+    Type = SecuritySchemeType.Http,
+    In = ParameterLocation.Header,
+    Name = HeaderNames.Authorization,
+    Scheme = "Bearer"
+}));
+
+//AUTHENTICATION
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication().AddCookie("Identity.Bearer");
 
 builder.Services.AddScoped<IFlagUserDetails, FlagUserDetails>();
 builder.Services.AddScoped<FlagsUseCases>();
@@ -38,10 +53,14 @@ using (var scope = app.Services.CreateScope())
     context.Database.Migrate();
 }
 
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+    //SWAGGER
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 else
 {
@@ -56,6 +75,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+//AUTHENTICATION ROUTE
+app.MapGroup("/account").MapIdentityApi<IdentityUser>();
 
 app.MapControllerRoute(
     name: "default",

@@ -9,6 +9,7 @@ namespace Banderas.Web.Controllers
 {
     [Authorize] //Comprova que estigui loguejat
     [Route("Flags")]
+    [ApiExplorerSettings(IgnoreApi = true)] //Perque no surti a la API
     public class FlagsController(FlagsUseCases flags) : Controller
     {
         //[HttpGet("index")]
